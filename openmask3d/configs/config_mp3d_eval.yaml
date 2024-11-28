@@ -1,0 +1,31 @@
+general:
+    show_summary: False
+    dataset_name: mp3d
+    experiment_name: PLACEHOLDER_EXP_NAME # 💁 IMPORTANT: change this to a ✨unique name✨
+
+    chkpt_save_folder: /scratch/kumaraditya_gupta/roomlabel/model_v9/
+    device: cuda
+
+# yash_mehan/sherlock on neon
+# yash.mehan on phoenix/super
+train_dataset:
+    img_folder: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/train/all_dmaps
+    room_masks_folder: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/train/room_instances_mc
+    room_id_json: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/MP3D_REGION2ROOMID_v2.json
+
+eval_dataset:
+    img_folder: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/test/all_dmaps
+    room_masks_folder: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/test/room_instances_mc
+    room_id_json: /scratch/yash_mehan/sherlock/datasets/mp3d_split_OG/MP3D_REGION2ROOMID_v2.json
+
+eval_dataloader:
+    num_workers: 1
+    shuffle: False
+    batch_size: 1
+
+model:
+    embed_size: 1024
+    num_heads: 8
+    num_layers: 8
+    output_mode: "cls_token"
+    dropout: 0.2

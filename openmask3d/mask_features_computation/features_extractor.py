@@ -55,7 +55,9 @@ class PointProjector:
             # STEP 2: occlusions computation
             # Load the depth from the sensor
             depth_path = os.path.join(depths_path, str(idx) + '.png')
+            # print(depth_scale)
             sensor_depth = imageio.imread(depth_path) / depth_scale
+            # print(sensor_depth.shape)
             inside_mask = (projected_points[i,:,0] >= 0) * (projected_points[i,:,1] >= 0) \
                                 * (projected_points[i,:,0] < width) \
                                 * (projected_points[i,:,1] < height)

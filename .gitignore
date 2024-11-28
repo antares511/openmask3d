@@ -1,0 +1,7 @@
+.vscode
+*/__pycache__
+*.pyc
+openmask3d.egg-info
+output
+resources
+openmask3d/class_agnostic_mask_computation

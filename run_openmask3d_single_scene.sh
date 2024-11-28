@@ -10,14 +10,14 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
-SCENE_DIR="$(pwd)/resources/scene_example"
-SCENE_POSE_DIR="${SCENE_DIR}/pose"
-SCENE_INTRINSIC_PATH="${SCENE_DIR}/intrinsic/intrinsic_color.txt"
-SCENE_INTRINSIC_RESOLUTION="[968,1296]" # change if your intrinsics are based on another resolution
-SCENE_PLY_PATH="${SCENE_DIR}/scene_example.ply"
-SCENE_COLOR_IMG_DIR="${SCENE_DIR}/color"
-SCENE_DEPTH_IMG_DIR="${SCENE_DIR}/depth"
-IMG_EXTENSION=".jpg"
+SCENE_DIR="/scratch/kumaraditya_gupta/Datasets/arkitscenes/ChallengeDevelopmentSet/42445173"
+SCENE_POSE_DIR="${SCENE_DIR}/poses_ordered_openmask3d"
+SCENE_INTRINSIC_PATH="${SCENE_DIR}/K_openmask3d.txt"
+SCENE_INTRINSIC_RESOLUTION="[256,192]" # change if your intrinsics are based on another resolution
+SCENE_PLY_PATH="${SCENE_DIR}/42445173_3dod_mesh.ply"
+SCENE_COLOR_IMG_DIR="${SCENE_DIR}/lowres_wide_ordered"
+SCENE_DEPTH_IMG_DIR="${SCENE_DIR}/lowres_depth_ordered"
+IMG_EXTENSION=".png"
 DEPTH_EXTENSION=".png"
 DEPTH_SCALE=1000
 # model ckpt paths
@@ -25,7 +25,7 @@ MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_model.ckpt"
 SAM_CKPT_PATH="$(pwd)/resources/sam_vit_h_4b8939.pth"
 # output directories to save masks and mask features
 EXPERIMENT_NAME="experiment"
-OUTPUT_DIRECTORY="$(pwd)/output"
+OUTPUT_DIRECTORY="${SCENE_DIR}/output"
 TIMESTAMP=$(date +"%Y-%m-%d-%H-%M-%S")
 OUTPUT_FOLDER_DIRECTORY="${OUTPUT_DIRECTORY}/${TIMESTAMP}-${EXPERIMENT_NAME}"
 SAVE_VISUALIZATIONS=false #if set to true, saves pyviz3d visualizations
