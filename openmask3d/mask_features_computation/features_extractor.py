@@ -1,4 +1,5 @@
 import clip
+import open_clip
 import numpy as np
 import imageio
 import torch
@@ -158,7 +159,9 @@ class FeaturesExtractor:
     def __init__(
         self,
         camera,
+        clip_type,
         clip_model,
+        clip_pretrained,
         images,
         masks,
         pointcloud,
@@ -176,7 +179,17 @@ class FeaturesExtractor:
         self.predictor_sam = initialize_sam_model(
             device, sam_model_type, sam_checkpoint
         )
-        self.clip_model, self.clip_preprocess = clip.load(clip_model, device)
+
+        if clip_type == "openai":
+            self.clip_model, self.clip_preprocess = clip.load(clip_model, device)
+        elif clip_type == "open_clip":
+            self.clip_model, _, self.clip_preprocess = (
+                open_clip.create_model_and_transforms(
+                    clip_model, pretrained=clip_pretrained, device=device
+                )
+            )
+        else:
+            raise ValueError("clip_type must be 'openai' or 'open_clip'")
 
     def extract_features(
         self,

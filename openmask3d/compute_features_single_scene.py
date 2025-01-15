@@ -80,7 +80,9 @@ def main(ctx: DictConfig):
     # 5. Run extractor
     features_extractor = FeaturesExtractor(
         camera=camera,
+        clip_type=ctx.external.clip_type,
         clip_model=ctx.external.clip_model,
+        clip_pretrained=ctx.external.clip_pretrained,
         images=images,
         masks=masks,
         pointcloud=pointcloud,

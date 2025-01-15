@@ -13,7 +13,9 @@ openmask3d:
 external:
   sam_checkpoint: '../resources/sam_vit_h_4b8939.pth'
   sam_model_type: 'vit_h'
-  clip_model: 'ViT-L/14@336px'
+  clip_type: 'open_clip'
+  clip_model: 'ViT-H-14'
+  clip_pretrained: 'laion2b_s32b_b79k'
 
 output:
   experiment_name: 'experiment'
