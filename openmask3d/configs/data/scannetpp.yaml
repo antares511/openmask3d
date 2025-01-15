@@ -1,0 +1,25 @@
+# @package data
+data_path: '/home/kumaraditya/openmask3d/resources/scene_example'
+scene: 4318f8bb3c
+masks:
+  masks_path: ???
+camera:
+  _target_: data.scannetpp.Camera
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  fx: 1437.56
+  fy: 1437.54
+  cx: 956.874
+  cy: 723.627
+  intrinsic_resolution: [1440, 1920]
+  depth_scale: 1000
+  stride: ${data.stride}
+images:
+  _target_: data.scannetpp.Images
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  indices: ???
+  height: ???
+  width: ???
+point_cloud_path: ???
+stride: 5

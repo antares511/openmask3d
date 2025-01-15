@@ -66,7 +66,11 @@ def main(ctx: DictConfig):
     #     indices=indices,
     # )
     indices = camera.indices
-    images = hydra.utils.instantiate(ctx.data.images, indices=indices)
+    height = camera.height
+    width = camera.width
+    images = hydra.utils.instantiate(
+        ctx.data.images, indices=indices, height=height, width=width
+    )
     print(f"[INFO] Images loaded. {len(images.images)} images found.")
 
     # 4. Load the pointcloud
