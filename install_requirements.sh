@@ -13,11 +13,13 @@ set -e
 pip install torch==1.12.1 torchvision==0.13.1 -f https://download.pytorch.org/whl/cu113/torch_stable.html
 pip install ninja==1.10.2.3
 pip install pytorch-lightning==1.7.2 fire==0.5.0 imageio==2.23.0 tqdm==4.64.1 wandb==0.13.2
+pip install torch-scatter -f https://data.pyg.org/whl/torch-1.12.1+cu113.html
 pip install python-dotenv==0.21.0 pyviz3d==0.2.32 scipy==1.9.3 plyfile==0.7.4 scikit-learn==1.2.0 trimesh==3.17.1 loguru==0.6.0 albumentations==1.3.0 volumentations==0.1.8
 pip install antlr4-python3-runtime==4.8 black==21.4b2 omegaconf==2.0.6 hydra-core==1.0.5 --no-deps
 
 pip install 'git+https://github.com/facebookresearch/detectron2.git@710e7795d0eeadf9def0e7ef957eea13532e34cf' --no-deps
 
+pip install setuptools==68.0.0
 conda install -y openblas-devel -c anaconda
 pip install -U git+https://github.com/NVIDIA/MinkowskiEngine -v --no-deps --config-settings="--blas_include_dirs=${CONDA_PREFIX}/include" --config-settings="--blas=openblas" 
 
@@ -30,9 +32,7 @@ pip install pycocotools==2.0.6
 pip install h5py==3.7.0
 pip install transforms3d==0.4.1
 pip install open3d==0.16.0
-pip install torch-scatter -f https://data.pyg.org/whl/torch-1.12.1+cu113.html
 pip install torchmetrics==0.11.0
-pip install setuptools==68.0.0
 
 pip install fvcore==0.1.5.post20221221 
 pip install cloudpickle==2.1.0
@@ -44,3 +44,10 @@ pip install git+https://github.com/openai/CLIP.git@a9b1bf5920416aaeaec965c25dd9e
 pip install  git+https://github.com/facebookresearch/segment-anything.git@6fdee8f2727f4506cfbbe553e23b895e27956588 --no-deps
 pip install ftfy==6.1.1
 pip install regex==2023.10.3
+
+pip install appdirs
+pip install mypy-extensions
+pip install pathspec
+pip install toml
+pip install future
+pip install pydot

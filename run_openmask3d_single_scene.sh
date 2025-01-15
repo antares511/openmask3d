@@ -10,18 +10,12 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
+DATASET="openmask3d"
 SCENE_DIR="$(pwd)/resources/scene_example"
-SCENE_POSE_DIR="${SCENE_DIR}/pose"
-SCENE_INTRINSIC_PATH="${SCENE_DIR}/intrinsic/intrinsic_color.txt"
-SCENE_INTRINSIC_RESOLUTION="[968,1296]" # change if your intrinsics are based on another resolution
 SCENE_PLY_PATH="${SCENE_DIR}/scene_example.ply"
-SCENE_COLOR_IMG_DIR="${SCENE_DIR}/color"
-SCENE_DEPTH_IMG_DIR="${SCENE_DIR}/depth"
-IMG_EXTENSION=".jpg"
-DEPTH_EXTENSION=".png"
-DEPTH_SCALE=1000
+
 # model ckpt paths
-MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_model.ckpt"
+MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_val.ckpt"
 SAM_CKPT_PATH="$(pwd)/resources/sam_vit_h_4b8939.pth"
 # output directories to save masks and mask features
 EXPERIMENT_NAME="experiment"
@@ -61,15 +55,9 @@ echo "[INFO] Masks saved to ${SCENE_MASK_PATH}."
 echo "[INFO] Computing mask features..."
 
 python compute_features_single_scene.py \
+data=${DATASET} \
+data.data_path=${SCENE_DIR} \
 data.masks.masks_path=${SCENE_MASK_PATH} \
-data.camera.poses_path=${SCENE_POSE_DIR} \
-data.camera.intrinsic_path=${SCENE_INTRINSIC_PATH} \
-data.camera.intrinsic_resolution=${SCENE_INTRINSIC_RESOLUTION} \
-data.depths.depths_path=${SCENE_DEPTH_IMG_DIR} \
-data.depths.depth_scale=${DEPTH_SCALE} \
-data.depths.depths_ext=${DEPTH_EXTENSION} \
-data.images.images_path=${SCENE_COLOR_IMG_DIR} \
-data.images.images_ext=${IMG_EXTENSION} \
 data.point_cloud_path=${SCENE_PLY_PATH} \
 output.output_directory=${OUTPUT_FOLDER_DIRECTORY} \
 output.save_crops=${SAVE_CROPS} \

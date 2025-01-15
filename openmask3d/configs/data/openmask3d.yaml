@@ -1,0 +1,23 @@
+# @package data
+
+data_path: '/home/kumaraditya/openmask3d/resources/scene_example'
+masks:
+    masks_path: ???
+camera:
+  _target_: data.openmask3d.Camera
+  data_path: ${data.data_path}
+  intrinsic_path: 'intrinsic/intrinsic_color.txt'
+  intrinsic_resolution: [968, 1296]
+  poses_path: 'pose'
+  depths_path: 'depth'
+  depths_ext: '.png'
+  depth_scale: 1000
+  stride: ${data.stride}
+images:
+  _target_: data.openmask3d.Images
+  data_path: ${data.data_path}
+  images_path: 'color'  
+  images_ext: '.jpg'
+  indices: ???
+point_cloud_path: ${data.data_path}/scene_example.ply
+stride: 10

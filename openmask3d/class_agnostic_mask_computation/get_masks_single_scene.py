@@ -6,7 +6,7 @@ from omegaconf import DictConfig
 from trainer.trainer import InstanceSegmentation, RegularCheckpointing
 from utils.utils import (
     load_checkpoint_with_missing_or_exsessive_keys,
-    load_backbone_checkpoint_with_missing_or_exsessive_keys
+    load_backbone_checkpoint_with_missing_or_exsessive_keys,
 )
 from pytorch_lightning import Trainer
 import open3d as o3d
@@ -15,14 +15,15 @@ import torch
 import time
 import pdb
 
+
 def get_parameters(cfg: DictConfig):
-    #logger = logging.getLogger(__name__)
+    # logger = logging.getLogger(__name__)
     load_dotenv(".env")
 
     # getting basic configuration
     if cfg.general.get("gpus", None) is None:
         cfg.general.gpus = os.environ.get("CUDA_VISIBLE_DEVICES", None)
-    #loggers = []
+    # loggers = []
 
     model = InstanceSegmentation(cfg)
     if cfg.general.backbone_checkpoint is not None:
@@ -30,8 +31,8 @@ def get_parameters(cfg: DictConfig):
     if cfg.general.checkpoint is not None:
         cfg, model = load_checkpoint_with_missing_or_exsessive_keys(cfg, model)
 
-    #logger.info(flatten_dict(OmegaConf.to_container(cfg, resolve=True)))
-    return cfg, model, None #loggers
+    # logger.info(flatten_dict(OmegaConf.to_container(cfg, resolve=True)))
+    return cfg, model, None  # loggers
 
 
 def load_ply(filepath):
@@ -42,10 +43,11 @@ def load_ply(filepath):
     normals = np.asarray(pcd.normals)
     return coords, colors, normals
 
+
 def process_file(filepath):
     coords, colors, normals = load_ply(filepath)
     raw_coordinates = coords.copy()
-    raw_colors = (colors*255).astype(np.uint8)
+    raw_colors = (colors * 255).astype(np.uint8)
     raw_normals = normals
 
     features = colors
@@ -55,17 +57,24 @@ def process_file(filepath):
         features = np.hstack((features, coords))
 
     filename = filepath.split("/")[-1][:-4]
-    return [[coords, features, [], filename, raw_colors, raw_normals, raw_coordinates, 0]] # 2: original_labels, 3: none
+    return [
+        [coords, features, [], filename, raw_colors, raw_normals, raw_coordinates, 0]
+    ]  # 2: original_labels, 3: none
     # coordinates, features, labels, self.data[idx]['raw_filepath'].split("/")[-2], raw_color, raw_normals, raw_coordinates, idx
 
-@hydra.main(config_path="conf", config_name="config_base_class_agn_masks_single_scene.yaml")
+
+@hydra.main(
+    config_path="conf", config_name="config_base_class_agn_masks_single_scene.yaml"
+)
 def get_class_agnostic_masks(cfg: DictConfig):
 
-    device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     os.chdir(hydra.utils.get_original_cwd())
     cfg, model, loggers = get_parameters(cfg)
 
-    c_fn = hydra.utils.instantiate(cfg.data.test_collation) #(model.config.data.test_collation)
+    c_fn = hydra.utils.instantiate(
+        cfg.data.test_collation
+    )  # (model.config.data.test_collation)
 
     input_batch = process_file(cfg.general.scene_path)
     batch = c_fn(input_batch)
@@ -79,9 +88,13 @@ def get_class_agnostic_masks(cfg: DictConfig):
     end = time.time()
     print("Time elapsed: ", end - start)
 
-@hydra.main(config_path="conf", config_name="config_base_class_agn_masks_single_scene.yaml")
+
+@hydra.main(
+    config_path="conf", config_name="config_base_class_agn_masks_single_scene.yaml"
+)
 def main(cfg: DictConfig):
     get_class_agnostic_masks(cfg)
+
 
 if __name__ == "__main__":
     main()
