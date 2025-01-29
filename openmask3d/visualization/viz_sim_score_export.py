@@ -52,9 +52,6 @@ class QuerySimilarityComputation:
     ):
         # get colors based on the openmask3d per mask scores
 
-        import pdb
-
-        pdb.set_trace()
         non_zero_points = per_mask_scores != 0
         openmask3d_per_mask_scores_rescaled = np.zeros_like(per_mask_scores)
         pms = per_mask_scores[non_zero_points]
@@ -91,10 +88,10 @@ def main():
     # Set the paths
     # --------------------------------
     path_scene_pcd = (
-        "/data/concept-graphs/scannetpp/data/0a76e06478/scans/mesh_aligned_0.05.ply"
+        "/data/concept-graphs/Replica/room0_mesh.ply"
     )
-    path_pred_masks = "/home/kumaraditya/openmask3d/output/scannetpp/0a76e06478/2025-01-15-11-53-01-eval/mesh_aligned_0.05_masks.pt"
-    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/scannetpp/0a76e06478/2025-01-15-11-53-01-eval/mesh_aligned_0.05_openmask3d_features.npy"
+    path_pred_masks = "/home/kumaraditya/openmask3d/output/replica/room0/2025-01-29-12-20-51-eval/room0_mesh_masks.pt"
+    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/replica/room0/2025-01-29-12-20-51-eval/room0_mesh_openmask3d_features.npy"
 
     # --------------------------------
     # Load data
@@ -116,7 +113,7 @@ def main():
     # --------------------------------
     # Set the query text
     # --------------------------------
-    query_text = "bed"  # change the query text here
+    query_text = "cushion"  # change the query text here
 
     # --------------------------------
     # Get the similarity scores

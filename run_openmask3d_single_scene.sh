@@ -10,10 +10,10 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
-DATASET="openmask3d"
-DATA_DIR="/home/kumaraditya/openmask3d/resources"
-SCENE="scene_example"
-SCENE_PLY_PATH="${DATA_DIR}/${SCENE}/scene_example.ply"
+DATASET="replica"
+DATA_DIR="/data/concept-graphs/Replica"
+SCENE="room0"
+SCENE_PLY_PATH="${DATA_DIR}/${SCENE}_mesh.ply"
 
 # model ckpt paths
 MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_val.ckpt"
