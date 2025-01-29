@@ -3,7 +3,6 @@ from PIL import Image
 import imageio
 import math
 import os
-from path import Path
 from scipy.spatial.transform import Rotation
 from pathlib import Path
 
