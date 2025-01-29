@@ -162,6 +162,7 @@ class FeaturesExtractor:
         clip_type,
         clip_model,
         clip_pretrained,
+        clip_dim,
         images,
         masks,
         pointcloud,
@@ -180,12 +181,13 @@ class FeaturesExtractor:
             device, sam_model_type, sam_checkpoint
         )
 
+        self.clip_dim = clip_dim
         if clip_type == "openai":
             self.clip_model, self.clip_preprocess = clip.load(clip_model, device)
         elif clip_type == "open_clip":
             self.clip_model, _, self.clip_preprocess = (
                 open_clip.create_model_and_transforms(
-                    clip_model, pretrained=clip_pretrained, device=device
+                    clip_model, pretrained=clip_pretrained, device=self.device
                 )
             )
         else:
@@ -209,7 +211,7 @@ class FeaturesExtractor:
         topk_indices_per_mask = self.point_projector.get_top_k_indices_per_mask(topk)
 
         num_masks = self.point_projector.masks.num_masks
-        mask_clip = np.zeros((num_masks, 768))  # initialize mask clip
+        mask_clip = np.zeros((num_masks, self.clip_dim))  # initialize mask clip
 
         np_images = self.images.get_as_np_list()
         for mask in tqdm(range(num_masks)):  # for each mask

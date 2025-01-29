@@ -1,5 +1,5 @@
 # @package data
-data_path: '/home/kumaraditya/openmask3d/resources/scene_example'
+data_path: '/data/concept-graphs/scannetpp'
 scene: 4318f8bb3c
 masks:
   masks_path: ???
@@ -22,4 +22,4 @@ images:
   height: ???
   width: ???
 point_cloud_path: ???
-stride: 5
+stride: 20

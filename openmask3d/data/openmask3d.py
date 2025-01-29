@@ -41,6 +41,9 @@ class Camera:
         self.poses = self.load_poses(self.indices)
         self.depths = [self.load_depth(idx, self.depth_scale) for idx in self.indices]
 
+        self.height = self.depths[0].shape[0]
+        self.width = self.depths[0].shape[1]
+
     def get_adapted_intrinsic(self, desired_resolution):
         """Get adjusted camera intrinsics."""
         if self.intrinsic_original_resolution == desired_resolution:

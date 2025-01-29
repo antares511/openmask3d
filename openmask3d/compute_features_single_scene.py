@@ -83,6 +83,7 @@ def main(ctx: DictConfig):
         clip_type=ctx.external.clip_type,
         clip_model=ctx.external.clip_model,
         clip_pretrained=ctx.external.clip_pretrained,
+        clip_dim=ctx.external.clip_dim,
         images=images,
         masks=masks,
         pointcloud=pointcloud,

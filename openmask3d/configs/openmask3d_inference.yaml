@@ -16,6 +16,7 @@ external:
   clip_type: 'open_clip'
   clip_model: 'ViT-H-14'
   clip_pretrained: 'laion2b_s32b_b79k'
+  clip_dim: 1024
 
 output:
   experiment_name: 'experiment'
@@ -23,4 +24,4 @@ output:
   save_crops: False
 
 gpu:
-  optimize_gpu_usage: False
+  optimize_gpu_usage: false
