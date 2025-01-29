@@ -10,17 +10,17 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
-DATASET="scannetpp"
-DATA_DIR="/data/concept-graphs/scannetpp"
-SCENE="0a76e06478"
-SCENE_PLY_PATH="${DATA_DIR}/data/${SCENE}/scans/mesh_aligned_0.05.ply"
+DATASET="openmask3d"
+DATA_DIR="/home/kumaraditya/openmask3d/resources"
+SCENE="scene_example"
+SCENE_PLY_PATH="${DATA_DIR}/${SCENE}/scene_example.ply"
 
 # model ckpt paths
 MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_val.ckpt"
 SAM_CKPT_PATH="$(pwd)/resources/sam_vit_h_4b8939.pth"
 # output directories to save masks and mask features
 EXPERIMENT_NAME="eval"
-OUTPUT_DIRECTORY="$(pwd)/output/scannetpp/${SCENE}"
+OUTPUT_DIRECTORY="$(pwd)/output/${DATASET}/${SCENE}"
 TIMESTAMP=$(date +"%Y-%m-%d-%H-%M-%S")
 OUTPUT_FOLDER_DIRECTORY="${OUTPUT_DIRECTORY}/${TIMESTAMP}-${EXPERIMENT_NAME}"
 SAVE_VISUALIZATIONS=false #if set to true, saves pyviz3d visualizations
