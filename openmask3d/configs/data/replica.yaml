@@ -1,0 +1,25 @@
+# @package data
+data_path: "/data/concept-graphs/replica"
+scene: room0
+masks:
+  masks_path: ???
+camera:
+  _target_: data.replica.Camera
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  fx: 600.0
+  fy: 600.0
+  cx: 599.5
+  cy: 339.5
+  intrinsic_resolution: [680, 1200]
+  depth_scale: 6553.5
+  stride: ${data.stride}
+images:
+  _target_: data.replica.Images
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  indices: ???
+  height: ???
+  width: ???
+point_cloud_path: ???
+stride: 10
