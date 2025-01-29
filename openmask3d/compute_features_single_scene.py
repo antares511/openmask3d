@@ -18,8 +18,8 @@ import os
 @hydra.main(config_path="configs", config_name="openmask3d_inference")
 def main(ctx: DictConfig):
 
-    device = "cpu"
-    device = get_free_gpu(min_mem=7000) if torch.cuda.is_available() else device
+    # device = "cpu"
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Using device: {device}")
 
     out_folder = ctx.output.output_directory

@@ -178,12 +178,12 @@ class FeaturesExtractor:
             camera, pointcloud, masks, vis_threshold, images.indices
         )
         self.predictor_sam = initialize_sam_model(
-            device, sam_model_type, sam_checkpoint
+            self.device, sam_model_type, sam_checkpoint
         )
 
         self.clip_dim = clip_dim
         if clip_type == "openai":
-            self.clip_model, self.clip_preprocess = clip.load(clip_model, device)
+            self.clip_model, self.clip_preprocess = clip.load(clip_model, self.device)
         elif clip_type == "open_clip":
             self.clip_model, _, self.clip_preprocess = (
                 open_clip.create_model_and_transforms(
@@ -218,7 +218,7 @@ class FeaturesExtractor:
             images_crops = []
             if optimize_gpu_usage:
                 self.clip_model.to(torch.device("cpu"))
-                self.predictor_sam.model.cuda()
+                self.predictor_sam.model.to(self.device)
             for view_count, view in enumerate(
                 topk_indices_per_mask[mask]
             ):  # for each view
@@ -267,7 +267,7 @@ class FeaturesExtractor:
 
             if optimize_gpu_usage:
                 self.predictor_sam.model.cpu()
-                self.clip_model.to(torch.device("cuda"))
+                self.clip_model.to(self.device)
             if len(images_crops) > 0:
                 image_input = torch.tensor(np.stack(images_crops))
                 with torch.no_grad():

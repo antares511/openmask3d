@@ -5,7 +5,7 @@ import imageio
 import torch
 import math
 import os
-from path import Path
+from pathlib import Path
 
 
 def get_number_of_images(poses_path):
@@ -19,6 +19,7 @@ class Camera:
     def __init__(
         self,
         data_path,
+        scene,
         intrinsic_path,
         intrinsic_resolution,
         poses_path,
@@ -27,11 +28,12 @@ class Camera:
         depth_scale,
         stride,
     ):
-        self.intrinsic_path = str(Path(data_path) / intrinsic_path)
+        self.data_path = Path(data_path) / scene
+        self.intrinsic_path = str(self.data_path / intrinsic_path)
         self.intrinsic = np.loadtxt(self.intrinsic_path)[:3, :3]
         self.intrinsic_original_resolution = intrinsic_resolution
-        self.poses_path = str(Path(data_path) / poses_path)
-        self.depths_path = str(Path(data_path) / depths_path)
+        self.poses_path = str(self.data_path / poses_path)
+        self.depths_path = str(self.data_path / depths_path)
         self.extension_depth = depths_ext
         self.depth_scale = depth_scale
         self.indices = np.arange(
@@ -88,8 +90,8 @@ class Camera:
 
 
 class Images:
-    def __init__(self, data_path, images_path, images_ext, indices):
-        self.images_path = str(Path(data_path) / images_path)
+    def __init__(self, data_path, scene, images_path, images_ext, indices, **kwargs):
+        self.images_path = str(Path(data_path) / scene / images_path)
         self.extension = images_ext
         self.indices = indices
         self.images = self.load_images(indices)

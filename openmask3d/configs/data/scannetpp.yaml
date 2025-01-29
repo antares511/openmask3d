@@ -1,5 +1,5 @@
 # @package data
-data_path: '/data/concept-graphs/scannetpp'
+data_path: "/data/concept-graphs/scannetpp"
 scene: 4318f8bb3c
 masks:
   masks_path: ???

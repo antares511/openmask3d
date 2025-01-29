@@ -11,16 +11,16 @@ openmask3d:
   num_selected_points: 5
 
 external:
-  sam_checkpoint: '../resources/sam_vit_h_4b8939.pth'
-  sam_model_type: 'vit_h'
-  clip_type: 'open_clip'
-  clip_model: 'ViT-H-14'
-  clip_pretrained: 'laion2b_s32b_b79k'
+  sam_checkpoint: "../resources/sam_vit_h_4b8939.pth"
+  sam_model_type: "vit_h"
+  clip_type: "open_clip"
+  clip_model: "ViT-H-14"
+  clip_pretrained: "laion2b_s32b_b79k"
   clip_dim: 1024
 
 output:
-  experiment_name: 'experiment'
-  output_directory: 'output/'
+  experiment_name: "experiment"
+  output_directory: "output/"
   save_crops: False
 
 gpu:
