@@ -34,8 +34,12 @@ class COLMAP_image_txt:
 
     def __next__(self):
         line = next(self.file).split()
-        while not len(line) or line[0] == "#":
+        while not len(line) or line[0] == "#" or not line[-1].endswith(".jpg"):
             line = next(self.file).split()
+
+        # Some scenes have a leading video/ in the path for no apparent reason
+        line[-1] = line[-1].replace("video/", "")
+
         return line
 
 
@@ -89,6 +93,8 @@ class Camera:
                 / "depth"
                 / file_name
             )
+
+        print(depth_paths[0])
 
         return depth_paths
 
