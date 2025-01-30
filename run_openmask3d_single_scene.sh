@@ -10,13 +10,13 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
-DATASET="replica"
-DATA_DIR="/data/concept-graphs/Replica"
-SCENE="room0"
-SCENE_PLY_PATH="${DATA_DIR}/${SCENE}_mesh.ply"
+DATASET="scannetpp"
+DATA_DIR="/home/kumaraditya/datasets/scannetpp_openlex_v2"
+SCENE="8a35ef3cfe"
+SCENE_PLY_PATH="${DATA_DIR}/data/${SCENE}/scans/pcd_sampled_aligned_0.02.ply"
 
 # model ckpt paths
-MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_val.ckpt"
+MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_model.ckpt"
 SAM_CKPT_PATH="$(pwd)/resources/sam_vit_h_4b8939.pth"
 # output directories to save masks and mask features
 EXPERIMENT_NAME="eval"
