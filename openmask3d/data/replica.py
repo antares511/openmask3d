@@ -74,8 +74,6 @@ class Camera:
     def get_depth_paths(self):
         path_str = str(Path(self.data_path) / self.scene / "results/depth*.png")
         depth_paths = natsorted(glob.glob(path_str))
-
-        print(f"Found {len(depth_paths)} depth images.")
         return depth_paths
 
     def load_depth(self, idx):
@@ -92,11 +90,11 @@ class Camera:
             lines = f.readlines()
 
         for line in lines:
-            se3 = np.array(list(map(float, line.split()))).reshape(4, 4)
-            # Append 3x4 pose matrix
-            se3_poses.append(se3[:3, :])
+            se3 = np.array(list(map(float, line.split()))).reshape(4, 4)  # c2w
 
-        print(f"Found {len(se3_poses)} poses.")
+            se3_inversed = invert_se3(se3)  # w2c
+            # Append 3x4 pose matrix
+            se3_poses.append(se3_inversed[:3, :])
 
         return se3_poses
 
@@ -143,7 +141,6 @@ class Images:
     def get_rgb_paths(self):
         path_str = str(Path(self.data_path) / self.scene / "results/frame*.jpg")
         rgb_paths = natsorted(glob.glob(path_str))
-        print(f"Found {len(rgb_paths)} depth images.")
         return rgb_paths
 
     def load_images(self, idx):
