@@ -5,6 +5,7 @@ import clip
 import pdb
 import matplotlib.pyplot as plt
 from constants import *
+import open_clip
 
 
 class QuerySimilarityComputation:
@@ -14,7 +15,12 @@ class QuerySimilarityComputation:
         self.device = (
             torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
         )
-        self.clip_model, _ = clip.load("ViT-L/14@336px", self.device)
+        # self.clip_model, _ = clip.load("ViT-L/14@336px", self.device)
+        self.clip_model, _, self.clip_preprocess = (
+            open_clip.create_model_and_transforms(
+                "ViT-H-14", pretrained="laion2b_s32b_b79k", device=self.device
+            )
+        )
 
     def get_query_embedding(self, text_query):
         text_input_processed = clip.tokenize(text_query).to(self.device)
@@ -45,7 +51,7 @@ class QuerySimilarityComputation:
         self,
         per_mask_scores,
         masks,
-        normalize_based_on_current_min_max=False,
+        normalize_based_on_current_min_max=True,
         normalize_min_bound=0.16,  # only used for visualization if normalize_based_on_current_min_max is False
         normalize_max_bound=0.26,  # only used for visualization if normalize_based_on_current_min_max is False
         background_color=(0.77, 0.77, 0.77),
@@ -87,11 +93,9 @@ def main():
     # --------------------------------
     # Set the paths
     # --------------------------------
-    path_scene_pcd = (
-        "/data/concept-graphs/Replica/room0_mesh.ply"
-    )
-    path_pred_masks = "/home/kumaraditya/openmask3d/output/replica/room0/2025-01-29-12-20-51-eval/room0_mesh_masks.pt"
-    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/replica/room0/2025-01-29-12-20-51-eval/room0_mesh_openmask3d_features.npy"
+    path_scene_pcd = "/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb.ply"
+    path_pred_masks = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-09-05-38-eval/scene_rgb_masks.pt"
+    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-09-05-38-eval/scene_rgb_openmask3d_features.npy"
 
     # --------------------------------
     # Load data
@@ -113,7 +117,7 @@ def main():
     # --------------------------------
     # Set the query text
     # --------------------------------
-    query_text = "cushion"  # change the query text here
+    query_text = "bathtub"  # change the query text here
 
     # --------------------------------
     # Get the similarity scores

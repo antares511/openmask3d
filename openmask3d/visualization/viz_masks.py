@@ -3,8 +3,8 @@ import numpy as np
 import torch
 
 # Define file paths
-path_scene_pcd = "/home/kumaraditya/datasets/Replica/room0_mesh.ply"
-path_pred_masks = "/home/kumaraditya/openmask3d/output/replica/room0/2025-01-29-13-16-05-eval/room0_mesh_masks.pt"
+path_scene_pcd = "/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb.ply"
+path_pred_masks = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-09-05-38-eval/scene_rgb_masks.pt"
 
 # Load the scene point cloud
 scene_pcd = o3d.io.read_point_cloud(path_scene_pcd)

@@ -92,13 +92,14 @@ for SCENE in ${SCENES[@]}; do
     gpu.optimize_gpu_usage=${OPTIMIZE_GPU_USAGE}
     echo "[INFO] Feature computation done!"
 
-    python compute_mask_indices.py \
+    python openlex_utils/compute_mask_indices.py \
     data=${DATASET} \
     data.data_path=${DATA_DIR} \
     data.scene=${SCENE} \
     data.masks.masks_path=${SCENE_MASK_PATH} \
     data.point_cloud_path=${SCENE_PLY_PATH} \
     data.stride=${STRIDE} \
+    hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/mask_features_computation" \
     output.output_directory=${OUTPUT_FOLDER_DIRECTORY}
     echo "[INFO] Mask indices saved!"
 done

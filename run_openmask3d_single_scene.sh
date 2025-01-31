@@ -10,10 +10,10 @@ set -e
 # --------
 # NOTE: SET THESE PARAMETERS BASED ON YOUR SCENE!
 # data paths
-DATASET="scannetpp"
-DATA_DIR="/home/kumaraditya/datasets/scannetpp_openlex_v2"
-SCENE="8a35ef3cfe"
-SCENE_PLY_PATH="${DATA_DIR}/data/${SCENE}/scans/pcd_sampled_aligned_0.02.ply"
+DATASET="hm3d"
+DATA_DIR="/home/kumaraditya/datasets/hm3d_compressed"
+SCENE="00829"
+SCENE_PLY_PATH="${DATA_DIR}/${SCENE}/scene_rgb_downsampled.ply"
 
 # model ckpt paths
 MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_model.ckpt"
@@ -52,27 +52,28 @@ MASK_FILE_NAME=${MASK_FILE_BASE/.ply/_masks.pt}
 SCENE_MASK_PATH="${OUTPUT_FOLDER_DIRECTORY}/${MASK_FILE_NAME}"
 echo "[INFO] Masks saved to ${SCENE_MASK_PATH}."
 
-# 2. Compute mask features for each mask and save them
-echo "[INFO] Computing mask features..."
+# # 2. Compute mask features for each mask and save them
+# echo "[INFO] Computing mask features..."
 
-python compute_features_single_scene.py \
+# python compute_features_single_scene.py \
+# data=${DATASET} \
+# data.data_path=${DATA_DIR} \
+# data.scene=${SCENE} \
+# data.masks.masks_path=${SCENE_MASK_PATH} \
+# data.point_cloud_path=${SCENE_PLY_PATH} \
+# output.output_directory=${OUTPUT_FOLDER_DIRECTORY} \
+# output.save_crops=${SAVE_CROPS} \
+# hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/mask_features_computation" \
+# external.sam_checkpoint=${SAM_CKPT_PATH} \
+# gpu.optimize_gpu_usage=${OPTIMIZE_GPU_USAGE}
+# echo "[INFO] Feature computation done!"
+
+python openlex_utils/compute_mask_indices.py \
 data=${DATASET} \
 data.data_path=${DATA_DIR} \
 data.scene=${SCENE} \
 data.masks.masks_path=${SCENE_MASK_PATH} \
 data.point_cloud_path=${SCENE_PLY_PATH} \
-output.output_directory=${OUTPUT_FOLDER_DIRECTORY} \
-output.save_crops=${SAVE_CROPS} \
 hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/mask_features_computation" \
-external.sam_checkpoint=${SAM_CKPT_PATH} \
-gpu.optimize_gpu_usage=${OPTIMIZE_GPU_USAGE}
-echo "[INFO] Feature computation done!"
-
-python compute_mask_indices.py \
-data=${DATASET} \
-data.data_path=${DATA_DIR} \
-data.scene=${SCENE} \
-data.masks.masks_path=${SCENE_MASK_PATH} \
-data.point_cloud_path=${SCENE_PLY_PATH} \
 output.output_directory=${OUTPUT_FOLDER_DIRECTORY}
 echo "[INFO] Mask indices saved!"

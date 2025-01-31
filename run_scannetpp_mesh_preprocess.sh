@@ -21,7 +21,7 @@ cd openmask3d
 
 for SCENE in ${SCENES[@]}; do
     echo "Processing scene: ${SCENE}"
-    python mesh_preprocess.py \
+    python openlex_utils/scannet_mesh_preprocess.py \
     data=${DATASET} \
     data.data_path=${DATA_DIR} \
     data.scene=${SCENE}

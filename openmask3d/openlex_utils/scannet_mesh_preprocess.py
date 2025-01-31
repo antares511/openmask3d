@@ -33,7 +33,7 @@ def sample_mesh_with_adaptive_sampling(mesh, initial_factor=1, voxel_size=0.02):
     return pcd_downsampled
 
 
-@hydra.main(config_path="configs", config_name="openmask3d_inference")
+@hydra.main(config_path="../configs", config_name="openmask3d_inference")
 def main(ctx: DictConfig):
     data_path = ctx.data.data_path
     scene = ctx.data.scene

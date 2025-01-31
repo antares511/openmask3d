@@ -5,7 +5,7 @@ import torch
 import os
 
 
-@hydra.main(config_path="configs", config_name="openmask3d_inference")
+@hydra.main(config_path="../configs", config_name="openmask3d_inference")
 def main(ctx: DictConfig):
     path_pred_masks = ctx.data.masks.masks_path
     pred_masks = np.asarray(
@@ -21,7 +21,7 @@ def main(ctx: DictConfig):
     pred_mask_indices[~np.any(pred_masks, axis=0)] = -1
 
     np.save(
-        ctx.output.output_directory + "/mesh_aligned_0.05_mask_indices.npy",
+        ctx.output.output_directory + "/mesh_mask_indices.npy",
         pred_mask_indices,
     )
 
