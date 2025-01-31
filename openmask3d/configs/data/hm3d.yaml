@@ -1,0 +1,25 @@
+# @package data
+data_path: "/data/concept-graphs/hm3d"
+scene: "00824"
+masks:
+  masks_path: ???
+camera:
+  _target_: data.hm3d.Camera
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  fx: 540.0
+  fy: 540.0
+  cx: 540.0
+  cy: 360.0
+  intrinsic_resolution: [720, 1080]
+  depth_scale: 1000.0
+  stride: ${data.stride}
+images:
+  _target_: data.hm3d.Images
+  data_path: ${data.data_path}
+  scene: ${data.scene}
+  indices: ???
+  height: ???
+  width: ???
+point_cloud_path: ???
+stride: 10
