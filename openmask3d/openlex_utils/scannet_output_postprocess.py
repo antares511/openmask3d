@@ -9,7 +9,7 @@ openmask3d_output_directory = Path(
     "/home/kumaraditya/openmask3d/openmask3d/output/scannetpp"
 )
 final_output_directory = Path(
-    "/home/kumaraditya/openlex3d_results/openmask3d_duplicated/scannetpp"
+    "/home/kumaraditya/openlex_results/openmask3d_duplicated/scannetpp"
 )
 dataset_directory = Path("/home/kumaraditya/datasets/scannetpp_openlex_v2/data")
 scenes = [

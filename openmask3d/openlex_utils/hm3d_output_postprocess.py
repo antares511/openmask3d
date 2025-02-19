@@ -6,22 +6,16 @@ from natsort import natsorted
 import open3d as o3d
 
 openmask3d_output_directory = Path(
-    "/home/kumaraditya/openmask3d/openmask3d/output/replica"
+    "/home/kumaraditya/openmask3d/openmask3d/output/hm3d"
 )
 final_output_directory = Path(
-    "/home/kumaraditya/openlex_results/openmask3d_duplicated/replica"
+    "/home/kumaraditya/openlex_results/openmask3d_duplicated/hm3d"
 )
-dataset_directory = Path("/home/kumaraditya/datasets/Replica")
-scenes = [
-    "room0",
-    "room1",
-    "room2",
-    "office0",
-    "office1",
-    "office2",
-    "office3",
-    "office4",
-]
+dataset_directory = Path("/home/kumaraditya/datasets/hm3d_compressed")
+scenes = ["00824", "00843", "00847", "00873", "00877", "00829", "00890"]
+# scenes = ["00890"]
+
+import numpy as np
 
 
 def get_duplicated_pcd_and_mask_indices(openmask3d_pcd, openmask3d_masks):
@@ -92,13 +86,13 @@ def get_openlex_save_data(output_dir, scene):
     )
     latest_exp_folder = scene_exp_folders[-1]
 
-    original_pcd_path = dataset_directory / f"{scene}_mesh.ply"
-    openmask3d_masks_path = latest_exp_folder / f"{scene}_mesh_masks.pt"
-    openmask3d_mask_indices_path = (
-        latest_exp_folder / "mesh_aligned_0.05_mask_indices.npy"
+    original_pcd_path = dataset_directory / scene / "scene_rgb_downsampled_0.02.ply"
+    openmask3d_masks_path = (
+        latest_exp_folder / "scene_rgb_downsampled_0.02_rotated_masks.pt"
     )
+    openmask3d_mask_indices_path = latest_exp_folder / "mesh_mask_indices.npy"
     openmask3d_features_path = (
-        latest_exp_folder / f"{scene}_mesh_openmask3d_features.npy"
+        latest_exp_folder / "scene_rgb_downsampled_0.02_rotated_openmask3d_features.npy"
     )
 
     openmask3d_pcd = o3d.io.read_point_cloud(str(original_pcd_path))  # (num_points, 3)
@@ -114,11 +108,11 @@ def get_openlex_save_data(output_dir, scene):
     #     openmask3d_pcd, openmask3d_indices
     # )
 
-    duplicated_pcd, duplicated_indices = get_duplicated_pcd_and_mask_indices(
+    filtered_pcd, filtered_indices = get_duplicated_pcd_and_mask_indices(
         openmask3d_pcd, openmask3d_masks
     )
 
-    return duplicated_pcd, duplicated_indices, openmask3d_features
+    return filtered_pcd, filtered_indices, openmask3d_features
 
 
 def main():

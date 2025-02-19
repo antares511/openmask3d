@@ -3,7 +3,15 @@
 DATASET="hm3d"
 DATA_DIR="/home/kumaraditya/datasets/hm3d_compressed"
 
-SCENES=("00829")
+# SCENES=("00829"
+#         "00824"
+#         "00843"
+#         "00847"
+#         "00873"
+#         "00877"
+#         "00890")
+
+SCENES=("00890")
 
 cd openmask3d
 

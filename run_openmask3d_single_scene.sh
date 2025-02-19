@@ -13,7 +13,9 @@ set -e
 DATASET="hm3d"
 DATA_DIR="/home/kumaraditya/datasets/hm3d_compressed"
 SCENE="00829"
-SCENE_PLY_PATH="${DATA_DIR}/${SCENE}/scene_rgb_downsampled.ply"
+VOXEL_SIZE=0.02
+SCENE_PLY_PATH_ROTATED="${DATA_DIR}/${SCENE}/scene_rgb_downsampled_${VOXEL_SIZE}_rotated.ply"
+SCENE_PLY_PATH="${DATA_DIR}/${SCENE}/scene_rgb_downsampled_${VOXEL_SIZE}.ply"
 
 # model ckpt paths
 MASK_MODULE_CKPT_PATH="$(pwd)/resources/scannet200_model.ckpt"
@@ -41,32 +43,32 @@ model.num_queries=120 \
 general.use_dbscan=true \
 general.dbscan_eps=0.95 \
 general.save_visualizations=${SAVE_VISUALIZATIONS} \
-general.scene_path=${SCENE_PLY_PATH} \
+general.scene_path=${SCENE_PLY_PATH_ROTATED} \
 general.mask_save_dir="${OUTPUT_FOLDER_DIRECTORY}" \
 hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/class_agnostic_mask_computation" 
 echo "[INFO] Mask computation done!"
 
 # get the path of the saved masks
-MASK_FILE_BASE=$(echo $SCENE_PLY_PATH | sed 's:.*/::')
+MASK_FILE_BASE=$(echo $SCENE_PLY_PATH_ROTATED | sed 's:.*/::')
 MASK_FILE_NAME=${MASK_FILE_BASE/.ply/_masks.pt}
 SCENE_MASK_PATH="${OUTPUT_FOLDER_DIRECTORY}/${MASK_FILE_NAME}"
 echo "[INFO] Masks saved to ${SCENE_MASK_PATH}."
 
 # # 2. Compute mask features for each mask and save them
-# echo "[INFO] Computing mask features..."
+echo "[INFO] Computing mask features..."
 
-# python compute_features_single_scene.py \
-# data=${DATASET} \
-# data.data_path=${DATA_DIR} \
-# data.scene=${SCENE} \
-# data.masks.masks_path=${SCENE_MASK_PATH} \
-# data.point_cloud_path=${SCENE_PLY_PATH} \
-# output.output_directory=${OUTPUT_FOLDER_DIRECTORY} \
-# output.save_crops=${SAVE_CROPS} \
-# hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/mask_features_computation" \
-# external.sam_checkpoint=${SAM_CKPT_PATH} \
-# gpu.optimize_gpu_usage=${OPTIMIZE_GPU_USAGE}
-# echo "[INFO] Feature computation done!"
+python compute_features_single_scene.py \
+data=${DATASET} \
+data.data_path=${DATA_DIR} \
+data.scene=${SCENE} \
+data.masks.masks_path=${SCENE_MASK_PATH} \
+data.point_cloud_path=${SCENE_PLY_PATH} \
+output.output_directory=${OUTPUT_FOLDER_DIRECTORY} \
+output.save_crops=${SAVE_CROPS} \
+hydra.run.dir="${OUTPUT_FOLDER_DIRECTORY}/hydra_outputs/mask_features_computation" \
+external.sam_checkpoint=${SAM_CKPT_PATH} \
+gpu.optimize_gpu_usage=${OPTIMIZE_GPU_USAGE}
+echo "[INFO] Feature computation done!"
 
 python openlex_utils/compute_mask_indices.py \
 data=${DATASET} \

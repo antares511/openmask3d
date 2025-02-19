@@ -2,10 +2,11 @@ import open3d as o3d
 import numpy as np
 
 # Define file paths
-path_scene_pcd = (
-    "/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb_downsampled.ply"
-)
-path_pred_masks_indices = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-12-02-22-eval/mesh_mask_indices.npy"
+voxel_size = 0.02
+path_scene_pcd = f"/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb_downsampled_{voxel_size}.ply"
+path_pred_masks_indices_02 = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-15-49-57-eval/mesh_mask_indices.npy"
+
+path_pred_masks_indices = path_pred_masks_indices_02
 
 # Load the scene point cloud
 scene_pcd = o3d.io.read_point_cloud(path_scene_pcd)

@@ -93,9 +93,9 @@ def main():
     # --------------------------------
     # Set the paths
     # --------------------------------
-    path_scene_pcd = "/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb.ply"
-    path_pred_masks = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-09-05-38-eval/scene_rgb_masks.pt"
-    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-01-31-09-05-38-eval/scene_rgb_openmask3d_features.npy"
+    path_scene_pcd = "/home/kumaraditya/datasets/hm3d_compressed/00829/scene_rgb_downsampled_0.02.ply"
+    path_pred_masks = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-02-17-12-31-07-eval/scene_rgb_downsampled_0.02_rotated_masks.pt"
+    path_openmask3d_features = "/home/kumaraditya/openmask3d/output/hm3d/00829/2025-02-17-12-31-07-eval/scene_rgb_downsampled_0.02_rotated_openmask3d_features.npy"
 
     # --------------------------------
     # Load data
@@ -117,7 +117,7 @@ def main():
     # --------------------------------
     # Set the query text
     # --------------------------------
-    query_text = "bathtub"  # change the query text here
+    query_text = "chair"  # change the query text here
 
     # --------------------------------
     # Get the similarity scores
